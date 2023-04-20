@@ -1,0 +1,68 @@
+// 
+// Custom WP Login Form
+// Custom Background, Custom Button, Custom Logo, Custom CSS
+// Source: https://gist.github.com/HikwaMehluli/ae9896c9b1f04d223b16883d5e43f0e5
+//
+
+function custom_wp_login_form() { ?>
+	<style type="text/css">
+        
+        #login {
+            padding: 10px 0 !important;
+        }
+
+        /* Custom Background */
+        body.login {
+            background: #000;
+        }
+
+        /* Change Logo */
+    	body.login div#login h1 a {
+        	background-image: url(<?php echo get_stylesheet_directory_uri(); ?>/img/logo-desktop.png);
+            background-size: 150px;
+            height: 150px;
+            width: 150px;
+    	}
+
+        /* Custom Button */
+        body.login div#login form#loginform p.submit input#wp-submit {
+            border-radius: 0;
+            background: #e08906;
+            border: none;
+            color: black;
+            font-size: 15px;
+            outline: none;
+            padding: 0 25px;
+            text-align: center;
+        }
+
+        body.login div#login form#loginform p.submit input#wp-submit:hover {
+            background: #030a49;
+            color: white;
+        }
+
+        /* Lost Password & Back to Site colors */
+        .login #backtoblog a, 
+        .login #nav a {
+            color: white !important;
+        }
+
+        .login #backtoblog a:hover, 
+        .login #nav a:hover {
+            color: #e08906 !important;
+        }
+	</style>
+<?php }
+add_action( 'login_enqueue_scripts', 'custom_wp_login_form' );
+
+// Change the logo's link from wordpress.org to point to your website 
+function custom_wp_login_form_url() {
+	return get_bloginfo( 'url' );
+}
+add_filter( 'login_headerurl', 'custom_wp_login_form_url' );
+
+// Custom Login Error Message
+function custom_login_error_message() {
+    return 'Incorrect login details.';
+}
+add_filter('login_errors', 'custom_login_error_message');
